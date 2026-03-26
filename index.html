@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orbit Aviation — FS Economy Flying Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --paper: #f0e8d8;
+  --paper-dark: #e0d4be;
+  --paper-darker: #cfc3a8;
+  --ink: #111111;
+  --ink-mid: #2e2e2e;
+  --olive: #1a1a1a;
+  --olive-light: #555555;
+  --amber: #e05c00;
+  --amber-light: #ff7a1a;
+  --amber-pale: #ffd4a8;
+  --slate: #1a1a1a;
+  --red: #8b2a2a;
+  --cream: #faf5ea;
+  --display: 'Bebas Neue', sans-serif;
+  --serif: 'Libre Baskerville', Georgia, serif;
+  --mono: 'Share Tech Mono', monospace;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--serif);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3rem;
+  height: 64px;
+  background: var(--olive);
+  border-bottom: 3px solid var(--amber);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+}
+
+.nav-emblem { width: 38px; height: 38px; }
+
+.nav-title {
+  font-family: var(--display);
+  font-size: 26px;
+  letter-spacing: 0.12em;
+  color: var(--paper);
+  line-height: 1;
+}
+.nav-title span { color: var(--amber-light); }
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--paper-dark);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--amber-light); }
+
+.nav-cta {
+  font-family: var(--display);
+  font-size: 16px;
+  letter-spacing: 0.12em;
+  color: var(--olive);
+  background: var(--amber);
+  padding: 8px 22px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.nav-cta:hover { background: var(--amber-light); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding-top: 64px;
+  background: var(--slate);
+}
+
+.hero-chart {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(240,232,216,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240,232,216,0.06) 1px, transparent 1px),
+    linear-gradient(rgba(240,232,216,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240,232,216,0.03) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+}
+
+.hero-compass {
+  position: absolute;
+  right: -5%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 65%;
+  opacity: 0.07;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  padding: 5rem 3rem 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber);
+  border: 1px solid rgba(224,92,0,0.4);
+  padding: 6px 14px;
+  margin-bottom: 2rem;
+  background: rgba(224,92,0,0.08);
+}
+.hero-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--amber);
+  border-radius: 50%;
+}
+
+h1 {
+  font-family: var(--display);
+  font-size: clamp(72px, 9vw, 120px);
+  line-height: 0.9;
+  letter-spacing: 0.04em;
+  color: var(--paper);
+  margin-bottom: 0.4em;
+}
+h1 .accent { color: var(--amber-light); }
+h1 .alt {
+  color: var(--paper-dark);
+  font-size: 0.6em;
+  letter-spacing: 0.16em;
+  display: block;
+  margin-top: 0.1em;
+}
+
+.hero-tagline {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 18px;
+  color: rgba(240,232,216,0.65);
+  line-height: 1.6;
+  max-width: 420px;
+  margin-bottom: 2.5rem;
+  border-left: 2px solid var(--amber);
+  padding-left: 1.25rem;
+}
+
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+.btn-primary {
+  font-family: var(--display);
+  font-size: 18px;
+  letter-spacing: 0.12em;
+  color: var(--olive);
+  background: var(--amber);
+  padding: 12px 32px;
+  text-decoration: none;
+  border: 2px solid var(--amber);
+  transition: all 0.15s;
+  display: inline-block;
+}
+.btn-primary:hover { background: var(--amber-light); border-color: var(--amber-light); }
+
+.btn-outline {
+  font-family: var(--display);
+  font-size: 18px;
+  letter-spacing: 0.12em;
+  color: var(--paper);
+  background: transparent;
+  padding: 12px 32px;
+  text-decoration: none;
+  border: 2px solid rgba(240,232,216,0.3);
+  transition: border-color 0.15s;
+  display: inline-block;
+}
+.btn-outline:hover { border-color: var(--paper); }
+
+/* Instrument panel */
+.hero-right {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+}
+
+.instrument {
+  background: var(--ink);
+  border: 1px solid rgba(240,232,216,0.1);
+  padding: 1.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.instrument::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--amber);
+  opacity: 0.6;
+}
+
+.instrument-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.instrument-value {
+  font-family: var(--display);
+  font-size: 52px;
+  line-height: 1;
+  color: var(--paper);
+  letter-spacing: 0.04em;
+}
+.instrument-value .unit {
+  font-size: 20px;
+  color: var(--amber-light);
+  vertical-align: top;
+  margin-top: 6px;
+  display: inline-block;
+}
+
+.instrument-sub {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(240,232,216,0.35);
+  letter-spacing: 0.1em;
+  margin-top: 0.4rem;
+  display: block;
+}
+
+/* ── SECTIONS ── */
+section { padding: 6rem 3rem; }
+
+.section-header { margin-bottom: 3.5rem; }
+
+.section-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-tag::after {
+  content: '';
+  width: 48px;
+  height: 1px;
+  background: var(--amber);
+  opacity: 0.5;
+}
+
+h2 {
+  font-family: var(--display);
+  font-size: clamp(42px, 5vw, 64px);
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  line-height: 0.95;
+  margin-bottom: 1rem;
+}
+h2 .accent { color: var(--amber); }
+h2 .light { color: var(--olive-light); }
+
+.lead {
+  font-size: 16px;
+  color: var(--ink-mid);
+  max-width: 540px;
+  line-height: 1.8;
+  font-style: italic;
+}
+
+/* ── ABOUT ── */
+.about-section { background: var(--cream); }
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 5fr 4fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+.pillar {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 1.25rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--paper-darker);
+}
+.pillar:first-child { border-top: 1px solid var(--paper-darker); }
+
+.pillar-num {
+  font-family: var(--display);
+  font-size: 36px;
+  color: var(--paper-darker);
+  line-height: 1;
+  padding-top: 2px;
+}
+.pillar h3 {
+  font-family: var(--display);
+  font-size: 22px;
+  letter-spacing: 0.08em;
+  color: var(--olive);
+  margin-bottom: 4px;
+}
+.pillar p {
+  font-size: 14px;
+  color: var(--ink-mid);
+  line-height: 1.75;
+}
+
+.about-patch {
+  position: sticky;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.patch-circle { width: 100%; aspect-ratio: 1; max-width: 320px; margin: 0 auto; }
+
+.stat-strip {
+  background: var(--olive);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.stat-strip-item { text-align: center; }
+.stat-strip-num {
+  font-family: var(--display);
+  font-size: 30px;
+  color: var(--amber-light);
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+.stat-strip-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(240,232,216,0.5);
+  margin-top: 3px;
+}
+
+/* ── FLEET ── */
+.fleet-section { background: var(--ink); }
+.fleet-section .section-tag { color: var(--amber); }
+.fleet-section h2 { color: var(--paper); }
+.fleet-section h2 .accent { color: var(--amber-light); }
+.fleet-section .lead { color: rgba(240,232,216,0.6); }
+
+.fleet-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 3rem;
+}
+
+.fleet-card {
+  background: #111111;
+  border-top: 3px solid transparent;
+  padding: 2rem 1.75rem;
+  transition: border-color 0.2s, background 0.2s;
+  cursor: default;
+}
+.fleet-card:hover { border-top-color: var(--amber); background: #181818; }
+
+.fleet-icon { margin-bottom: 1.25rem; }
+
+.fleet-card h3 {
+  font-family: var(--display);
+  font-size: 22px;
+  letter-spacing: 0.08em;
+  color: var(--paper);
+  margin-bottom: 4px;
+  line-height: 1.1;
+}
+.fleet-type {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 0.85rem;
+}
+.fleet-card p {
+  font-size: 13px;
+  color: rgba(240,232,216,0.45);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+.fleet-specs { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+.spec {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(240,232,216,0.3);
+  letter-spacing: 0.06em;
+}
+.spec strong {
+  display: block;
+  font-size: 13px;
+  color: rgba(240,232,216,0.7);
+  font-weight: normal;
+  margin-bottom: 1px;
+}
+
+.fleet-expand {
+  background: #111111;
+  padding: 2rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed rgba(224,92,0,0.2);
+  text-align: center;
+}
+.fleet-expand p {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: rgba(224,92,0,0.4);
+  text-transform: uppercase;
+  line-height: 1.8;
+}
+
+/* ── ROUTES ── */
+.routes-section { background: var(--paper-dark); }
+
+.routes-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 4rem;
+  align-items: start;
+  margin-top: 3rem;
+}
+
+.hub-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--paper-darker);
+  transition: padding-left 0.15s;
+  cursor: default;
+}
+.hub-row:first-child { border-top: 1px solid var(--paper-darker); }
+.hub-row:hover { padding-left: 6px; }
+
+.hub-icao {
+  font-family: var(--display);
+  font-size: 20px;
+  letter-spacing: 0.08em;
+  color: var(--amber);
+  min-width: 64px;
+}
+.hub-info h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 1px;
+}
+.hub-info p {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--olive-light);
+  text-transform: uppercase;
+}
+.hub-tag {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border: 1px solid;
+}
+.hub-tag.primary { color: var(--red); border-color: rgba(139,42,42,0.4); background: rgba(139,42,42,0.06); }
+.hub-tag.hub { color: var(--olive); border-color: rgba(40,40,40,0.4); background: rgba(40,40,40,0.06); }
+.hub-tag.satellite { color: var(--slate); border-color: rgba(30,30,30,0.3); background: rgba(30,30,30,0.04); }
+
+.map-area {
+  background: var(--slate);
+  aspect-ratio: 16/10;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid var(--olive);
+}
+.map-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(240,232,216,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240,232,216,0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.map-dot {
+  position: absolute;
+  width: 8px; height: 8px;
+  background: var(--amber);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.map-dot::after {
+  content: attr(data-code);
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--amber-light);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+.map-center-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.map-center-label strong {
+  font-family: var(--display);
+  font-size: 18px;
+  letter-spacing: 0.15em;
+  color: rgba(224,92,0,0.3);
+}
+.map-center-label span {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(240,232,216,0.2);
+}
+
+/* ── NEWS ── */
+.news-section { background: var(--cream); }
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+  margin-top: 3rem;
+}
+
+.news-card {
+  border-left: 3px solid var(--paper-darker);
+  padding-left: 1.25rem;
+  transition: border-color 0.15s;
+  cursor: default;
+}
+.news-card:hover { border-left-color: var(--amber); }
+
+.news-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem; }
+.news-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  background: var(--olive);
+  color: var(--paper-dark);
+}
+.news-date {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--olive-light);
+  letter-spacing: 0.06em;
+}
+.news-card h3 {
+  font-family: var(--display);
+  font-size: 22px;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+  line-height: 1.1;
+}
+.news-card p {
+  font-size: 13px;
+  color: var(--ink-mid);
+  line-height: 1.75;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+.news-link {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--amber);
+  text-decoration: none;
+}
+.news-link:hover { color: var(--olive); }
+
+/* ── ROSTER ── */
+.roster-section { background: var(--olive); }
+.roster-section .section-tag { color: var(--amber); }
+.roster-section h2 { color: var(--paper); }
+.roster-section h2 .accent { color: var(--amber-light); }
+.roster-section .lead { color: rgba(240,232,216,0.6); }
+
+.roster-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 4rem;
+  align-items: start;
+  margin-top: 3rem;
+}
+
+.roster-cards { display: flex; flex-direction: column; gap: 2px; }
+
+.rcard {
+  background: rgba(20,20,20,0.35);
+  border-left: 3px solid transparent;
+  padding: 1.1rem 1.25rem;
+  transition: border-color 0.15s, background 0.15s;
+}
+.rcard:hover { border-left-color: var(--amber); background: rgba(20,20,20,0.5); }
+
+.rcard-val {
+  font-family: var(--display);
+  font-size: 38px;
+  color: var(--paper);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  margin-bottom: 3px;
+}
+.rcard-val span { font-size: 18px; color: var(--amber-light); }
+.rcard-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(240,232,216,0.4);
+}
+
+table { width: 100%; border-collapse: collapse; }
+thead th {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--amber);
+  text-align: left;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(224,92,0,0.3);
+  font-weight: normal;
+}
+tbody td {
+  padding: 0.85rem 0.5rem 0.85rem 0;
+  border-bottom: 1px solid rgba(240,232,216,0.06);
+  font-size: 13px;
+  color: rgba(240,232,216,0.65);
+}
+tbody tr:hover td { color: var(--paper); }
+
+.pilot-name {
+  font-family: var(--serif);
+  font-weight: 700;
+  color: var(--paper) !important;
+  font-size: 14px;
+}
+.rank-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border: 1px solid rgba(224,92,0,0.35);
+  color: var(--amber);
+  background: rgba(224,92,0,0.07);
+  white-space: nowrap;
+}
+
+/* ── JOIN ── */
+.join-section { background: var(--paper); text-align: center; }
+.join-section .section-tag { justify-content: center; }
+.join-section .section-tag::after { display: none; }
+.join-section .lead { margin: 0 auto 3rem; }
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 2px solid var(--paper-darker);
+  margin: 3rem 0 3.5rem;
+  text-align: left;
+}
+
+.step {
+  padding: 2.25rem 1.75rem;
+  border-right: 1px solid var(--paper-darker);
+  position: relative;
+}
+.step:last-child { border-right: none; }
+.step::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: transparent;
+  transition: background 0.2s;
+}
+.step:hover::before { background: var(--amber); }
+
+.step-num {
+  font-family: var(--display);
+  font-size: 56px;
+  color: var(--paper-darker);
+  line-height: 1;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.04em;
+}
+.step h3 {
+  font-family: var(--display);
+  font-size: 19px;
+  letter-spacing: 0.08em;
+  color: var(--olive);
+  margin-bottom: 0.5rem;
+}
+.step p {
+  font-size: 13px;
+  color: var(--ink-mid);
+  line-height: 1.7;
+  font-style: italic;
+}
+
+.join-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+/* ── CONTACT ── */
+.contact-section { background: var(--ink); }
+.contact-section .section-tag { color: var(--amber); }
+.contact-section h2 { color: var(--paper); }
+.contact-section h2 .accent { color: var(--amber-light); }
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  margin-top: 3rem;
+}
+
+.contact-row {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid rgba(240,232,216,0.06);
+}
+.contact-row:last-child { border-bottom: none; }
+
+.contact-icon {
+  width: 36px; height: 36px;
+  border: 1px solid rgba(224,92,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.contact-icon svg {
+  width: 14px; height: 14px;
+  stroke: var(--amber);
+  fill: none;
+  stroke-width: 1.5;
+}
+.contact-row h4 {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 4px;
+  font-weight: normal;
+}
+.contact-row p, .contact-row a {
+  font-size: 15px;
+  color: rgba(240,232,216,0.6);
+  text-decoration: none;
+  transition: color 0.15s;
+  font-style: italic;
+}
+.contact-row a:hover { color: var(--paper); }
+
+.discord-panel {
+  background: #0d0d0d;
+  border: 1px solid rgba(224,92,0,0.15);
+  padding: 2.5rem;
+}
+.discord-panel h3 {
+  font-family: var(--display);
+  font-size: 36px;
+  letter-spacing: 0.08em;
+  color: var(--paper);
+  margin-bottom: 1rem;
+}
+.discord-panel h3 span { color: var(--amber-light); }
+.discord-panel p {
+  font-size: 14px;
+  color: rgba(240,232,216,0.45);
+  line-height: 1.8;
+  font-style: italic;
+  margin-bottom: 2rem;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: #050505;
+  border-top: 2px solid var(--amber);
+  padding: 1.75rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-brand { display: flex; align-items: center; gap: 12px; }
+.footer-name {
+  font-family: var(--display);
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  color: var(--paper);
+}
+.footer-name span { color: var(--amber); }
+.footer-divider { width: 1px; height: 16px; background: rgba(224,92,0,0.3); }
+.footer-sub {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(240,232,216,0.25);
+}
+.footer-copy {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(240,232,216,0.2);
+  letter-spacing: 0.08em;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-badge   { animation: fadeUp 0.5s 0.0s both; }
+h1            { animation: fadeUp 0.5s 0.1s both; }
+.hero-tagline { animation: fadeUp 0.5s 0.2s both; }
+.hero-actions { animation: fadeUp 0.5s 0.3s both; }
+.hero-right   { animation: fadeUp 0.5s 0.35s both; }
+
+.inner { max-width: 1140px; margin: 0 auto; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg class="nav-emblem" viewBox="0 0 38 38" fill="none">
+      <circle cx="19" cy="19" r="18" stroke="#ff7a1a" stroke-width="1.5"/>
+      <circle cx="19" cy="19" r="12" stroke="#ff7a1a" stroke-width="0.75" stroke-dasharray="3 3"/>
+      <path d="M8 19h22M19 8v22" stroke="#ff7a1a" stroke-width="0.75" opacity="0.4"/>
+      <path d="M13 16l10 2 2 1-2 2-10-2z" fill="#ff7a1a"/>
+      <circle cx="19" cy="19" r="2.5" fill="#e05c00"/>
+    </svg>
+    <span class="nav-title">Orbit <span>Aviation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#fleet">Fleet</a></li>
+    <li><a href="#routes">Routes</a></li>
+    <li><a href="#roster">Roster</a></li>
+    <li><a href="#news">Dispatch</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#join" class="nav-cta">Enlist</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-chart"></div>
+  <svg class="hero-compass" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="250" cy="250" r="240" stroke="#f0e8d8" stroke-width="0.5"/>
+    <circle cx="250" cy="250" r="180" stroke="#f0e8d8" stroke-width="0.5" stroke-dasharray="4 4"/>
+    <circle cx="250" cy="250" r="120" stroke="#f0e8d8" stroke-width="0.5"/>
+    <circle cx="250" cy="250" r="60" stroke="#f0e8d8" stroke-width="0.5"/>
+    <path d="M250 10v480M10 250h480" stroke="#f0e8d8" stroke-width="0.75"/>
+    <path d="M250 10l20 80h-40z" fill="#f0e8d8" opacity="0.6"/>
+    <path d="M250 490l-20-80h40z" fill="#f0e8d8" opacity="0.3"/>
+    <path d="M10 250l80-20v40z" fill="#f0e8d8" opacity="0.3"/>
+    <path d="M490 250l-80 20v-40z" fill="#f0e8d8" opacity="0.3"/>
+    <text x="244" y="35" fill="#f0e8d8" font-size="14" font-family="monospace" opacity="0.5">N</text>
+    <text x="244" y="480" fill="#f0e8d8" font-size="14" font-family="monospace" opacity="0.5">S</text>
+    <text x="18" y="255" fill="#f0e8d8" font-size="14" font-family="monospace" opacity="0.5">W</text>
+    <text x="472" y="255" fill="#f0e8d8" font-size="14" font-family="monospace" opacity="0.5">E</text>
+    <circle cx="250" cy="250" r="10" fill="#e05c00" opacity="0.5"/>
+  </svg>
+
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-badge">FS Economy Group · Est. 2024 · ICAO: ORBT</div>
+      <h1>
+        <span class="alt">Welcome to</span>
+        Orbit<br><span class="accent">Aviation</span>
+      </h1>
+      <p class="hero-tagline">A virtual flying club for sim pilots who take their craft seriously — hauling cargo, building routes, and earning their wings across the FSE network.</p>
+      <div class="hero-actions">
+        <a href="#join" class="btn-primary">Apply to Join</a>
+        <a href="#about" class="btn-outline">Learn More</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="instrument">
+        <span class="instrument-label">Active Pilots</span>
+        <div class="instrument-value">24<span class="unit">+</span></div>
+        <span class="instrument-sub">Crew on roster</span>
+      </div>
+      <div class="instrument">
+        <span class="instrument-label">Flight Hours</span>
+        <div class="instrument-value">8<span class="unit">k+</span></div>
+        <span class="instrument-sub">Total logged</span>
+      </div>
+      <div class="instrument">
+        <span class="instrument-label">Fleet Size</span>
+        <div class="instrument-value">18</div>
+        <span class="instrument-sub">Aircraft in service</span>
+      </div>
+      <div class="instrument">
+        <span class="instrument-label">Active Hubs</span>
+        <div class="instrument-value">5</div>
+        <span class="instrument-sub">Worldwide bases</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="about-section">
+  <div class="inner">
+    <div class="about-grid">
+      <div>
+        <div class="section-header">
+          <div class="section-tag">About the Club</div>
+          <h2>Fly <span class="accent">with purpose.</span><br><span class="light">Not just for fun.</span></h2>
+          <p class="lead">Orbit Aviation was founded on the idea that virtual aviation is worth doing properly. We operate within FS Economy — a persistent simulation economy where every flight matters, every cargo run counts, and every decision has consequences.</p>
+        </div>
+        <div>
+          <div class="pillar">
+            <span class="pillar-num">01</span>
+            <div>
+              <h3>Professional Standards</h3>
+              <p>Realistic operational procedures from pre-flight to cargo delivery. Every flight is logged and contributes to the group's shared economy.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <span class="pillar-num">02</span>
+            <div>
+              <h3>Collaborative Operations</h3>
+              <p>Shared aircraft, coordinated hubs, and group missions mean you're never flying alone. Build something real alongside pilots who care.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <span class="pillar-num">03</span>
+            <div>
+              <h3>Structured Advancement</h3>
+              <p>Earn rank through logged hours, cargo missions, and contributions. Climb from Second Officer to Fleet Command — on merit.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-patch">
+        <svg class="patch-circle" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="160" cy="160" r="158" fill="#1a1a1a" stroke="#e05c00" stroke-width="2"/>
+          <circle cx="160" cy="160" r="144" stroke="#e05c00" stroke-width="0.75" stroke-dasharray="5 5" opacity="0.5"/>
+          <circle cx="160" cy="160" r="120" fill="none" stroke="#3a2a1a" stroke-width="1"/>
+          <ellipse cx="160" cy="160" rx="80" ry="120" stroke="#3a2a1a" stroke-width="0.75" opacity="0.8"/>
+          <ellipse cx="160" cy="160" rx="40" ry="120" stroke="#3a2a1a" stroke-width="0.75" opacity="0.6"/>
+          <line x1="40" y1="160" x2="280" y2="160" stroke="#3a2a1a" stroke-width="0.75" opacity="0.8"/>
+          <line x1="160" y1="40" x2="160" y2="280" stroke="#3a2a1a" stroke-width="0.5" opacity="0.5"/>
+          <path d="M80 155 L220 140 L240 158 L220 170 Z" fill="#e05c00" opacity="0.9"/>
+          <path d="M148 155 L120 190 L158 155 Z" fill="#e05c00" opacity="0.7"/>
+          <path d="M178 152 L168 178 L188 152 Z" fill="#e05c00" opacity="0.7"/>
+          <path id="topArc" d="M 52 160 a 108 108 0 0 1 216 0" fill="none"/>
+          <text font-family="'Bebas Neue', sans-serif" font-size="16" fill="#ff7a1a" letter-spacing="8">
+            <textPath href="#topArc">ORBIT AVIATION · FS ECONOMY ·</textPath>
+          </text>
+          <path id="botArc" d="M 52 162 a 108 108 0 0 0 216 0" fill="none"/>
+          <text font-family="'Share Tech Mono', monospace" font-size="10" fill="rgba(224,92,0,0.5)" letter-spacing="6">
+            <textPath href="#botArc" startOffset="15%">EST. 2024 · ICAO: ORBT</textPath>
+          </text>
+          <circle cx="160" cy="160" r="12" fill="#e05c00" opacity="0.8"/>
+          <circle cx="160" cy="160" r="6" fill="#111111"/>
+        </svg>
+        <div class="stat-strip">
+          <div class="stat-strip-item">
+            <div class="stat-strip-num">$2.4M</div>
+            <div class="stat-strip-label">FSE Earnings</div>
+          </div>
+          <div class="stat-strip-item">
+            <div class="stat-strip-num">84+</div>
+            <div class="stat-strip-label">Q1 Missions</div>
+          </div>
+          <div class="stat-strip-item">
+            <div class="stat-strip-num">3</div>
+            <div class="stat-strip-label">Continents</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLEET -->
+<section id="fleet" class="fleet-section">
+  <div class="inner">
+    <div class="section-header">
+      <div class="section-tag">Our Fleet</div>
+      <h2>The right aircraft<br>for <span class="accent">every run.</span></h2>
+      <p class="lead">From grass-strip turboprops to narrowbody jets — leased, maintained, and operated to cover every route in our network.</p>
+    </div>
+    <div class="fleet-list">
+      <div class="fleet-card">
+        <div class="fleet-icon">
+          <svg width="52" height="28" viewBox="0 0 80 35" fill="none">
+            <path d="M5 20 L62 14 L70 19 L62 24 Z" stroke="#e05c00" stroke-width="1.5"/>
+            <path d="M28 20 L20 30 L32 20 Z" stroke="#e05c00" stroke-width="1"/>
+            <path d="M43 20 L40 27 L48 20 Z" stroke="#e05c00" stroke-width="1"/>
+          </svg>
+        </div>
+        <h3>Cessna 208B Grand Caravan</h3>
+        <div class="fleet-type">Turboprop / Cargo</div>
+        <p>The workhorse of our short-haul ops. Handles everything the big jets can't reach.</p>
+        <div class="fleet-specs">
+          <div class="spec"><strong>1,500 kg</strong>Payload</div>
+          <div class="spec"><strong>1,890 nm</strong>Range</div>
+          <div class="spec"><strong>3</strong>In service</div>
+        </div>
+      </div>
+      <div class="fleet-card">
+        <div class="fleet-icon">
+          <svg width="52" height="28" viewBox="0 0 80 35" fill="none">
+            <path d="M4 20 L65 13 L73 19 L65 25 Z" stroke="#e05c00" stroke-width="1.5"/>
+            <path d="M26 20 L16 32 L30 20 Z" stroke="#e05c00" stroke-width="1"/>
+            <path d="M44 20 L40 29 L50 20 Z" stroke="#e05c00" stroke-width="1"/>
+            <path d="M62 14 L58 8 L64 13 Z" stroke="#e05c00" stroke-width="1"/>
+            <circle cx="18" cy="20" r="2" fill="#e05c00" opacity="0.4"/>
+            <circle cx="32" cy="20" r="2" fill="#e05c00" opacity="0.4"/>
+          </svg>
+        </div>
+        <h3>Beechcraft King Air 350</h3>
+        <div class="fleet-type">Twin Turboprop / Mixed</div>
+        <p>Most versatile airframe. Passenger runs, priority cargo, regional hubs.</p>
+        <div class="fleet-specs">
+          <div class="spec"><strong>2,100 kg</strong>Payload</div>
+          <div class="spec"><strong>2,580 nm</strong>Range</div>
+          <div class="spec"><strong>4</strong>In service</div>
+        </div>
+      </div>
+      <div class="fleet-card">
+        <div class="fleet-icon">
+          <svg width="52" height="28" viewBox="0 0 80 35" fill="none">
+            <path d="M3 20 L68 10 L76 19 L68 26 Z" stroke="#e05c00" stroke-width="1.5"/>
+            <path d="M22 20 L10 34 L26 20 Z" stroke="#e05c00" stroke-width="1"/>
+            <path d="M42 19 L38 30 L48 19 Z" stroke="#e05c00" stroke-width="1"/>
+            <path d="M65 11 L61 5 L67 11 Z" stroke="#e05c00" stroke-width="1"/>
+          </svg>
+        </div>
+        <h3>Boeing 737-700</h3>
+        <div class="fleet-type">Narrow-body Jet / Long Haul</div>
+        <p>Flagship. Senior captains only. Connects major hubs on high-volume corridors.</p>
+        <div class="fleet-specs">
+          <div class="spec"><strong>20,100 kg</strong>Payload</div>
+          <div class="spec"><strong>3,260 nm</strong>Range</div>
+          <div class="spec"><strong>2</strong>In service</div>
+        </div>
+      </div>
+      <div class="fleet-card">
+        <div class="fleet-icon">
+          <svg width="52" height="28" viewBox="0 0 80 35" fill="none">
+            <path d="M10 20 L58 17 L63 20 L58 24 Z" stroke="#e05c00" stroke-width="1.5"/>
+            <path d="M30 20 L24 28 L34 20 Z" stroke="#e05c00" stroke-width="1"/>
+            <path d="M40 20 L38 26 L44 20 Z" stroke="#e05c00" stroke-width="1"/>
+          </svg>
+        </div>
+        <h3>Piper PA-28 Cherokee</h3>
+        <div class="fleet-type">Piston / Training</div>
+        <p>How every Orbit pilot starts. Learn the network before you fly the line.</p>
+        <div class="fleet-specs">
+          <div class="spec"><strong>340 kg</strong>Payload</div>
+          <div class="spec"><strong>700 nm</strong>Range</div>
+          <div class="spec"><strong>5</strong>In service</div>
+        </div>
+      </div>
+      <div class="fleet-card">
+        <div class="fleet-icon">
+          <svg width="52" height="28" viewBox="0 0 80 35" fill="none">
+            <path d="M6 20 L64 14 L72 20 L64 26 Z" stroke="#e05c00" stroke-width="1.5"/>
+            <path d="M24 20 L14 32 L28 20 Z" stroke="#e05c00" stroke-width="1"/>
+            <path d="M40 20 L36 28 L46 20 Z" stroke="#e05c00" stroke-width="1"/>
+            <path d="M60 15 L55 8 L62 14 Z" stroke="#e05c00" stroke-width="1"/>
+          </svg>
+        </div>
+        <h3>Pilatus PC-12</h3>
+        <div class="fleet-type">Single Turboprop / Utility</div>
+        <p>Remote strips, specialty cargo, places the Caravan can't make it.</p>
+        <div class="fleet-specs">
+          <div class="spec"><strong>1,200 kg</strong>Payload</div>
+          <div class="spec"><strong>2,200 nm</strong>Range</div>
+          <div class="spec"><strong>4</strong>In service</div>
+        </div>
+      </div>
+      <div class="fleet-expand">
+        <p>Fleet expands through<br>group earnings &amp; member vote.<br>More types coming.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROUTES -->
+<section id="routes" class="routes-section">
+  <div class="inner">
+    <div class="section-header">
+      <div class="section-tag">Routes &amp; Hubs</div>
+      <h2>Our <span class="accent">network</span></h2>
+      <p class="lead">Five strategic bases across three continents, chosen for cargo density and FSE economic activity.</p>
+    </div>
+    <div class="routes-layout">
+      <div>
+        <div class="hub-row">
+          <span class="hub-icao">KDFW</span>
+          <div class="hub-info"><h4>Dallas/Fort Worth International</h4><p>Primary hub · High cargo volume</p></div>
+          <span class="hub-tag primary">Primary</span>
+        </div>
+        <div class="hub-row">
+          <span class="hub-icao">KORD</span>
+          <div class="hub-info"><h4>Chicago O'Hare International</h4><p>Northern hub · Passenger &amp; freight</p></div>
+          <span class="hub-tag hub">Hub</span>
+        </div>
+        <div class="hub-row">
+          <span class="hub-icao">KLAX</span>
+          <div class="hub-info"><h4>Los Angeles International</h4><p>West coast gateway</p></div>
+          <span class="hub-tag hub">Hub</span>
+        </div>
+        <div class="hub-row">
+          <span class="hub-icao">EGLL</span>
+          <div class="hub-info"><h4>London Heathrow</h4><p>European operations base</p></div>
+          <span class="hub-tag hub">Hub</span>
+        </div>
+        <div class="hub-row">
+          <span class="hub-icao">YSSY</span>
+          <div class="hub-info"><h4>Sydney Kingsford Smith</h4><p>Pacific region base</p></div>
+          <span class="hub-tag satellite">Satellite</span>
+        </div>
+      </div>
+      <div class="map-area">
+        <div class="map-grid"></div>
+        <div class="map-dot" data-code="KDFW" style="left:23%;top:48%;"></div>
+        <div class="map-dot" data-code="KORD" style="left:27%;top:38%;"></div>
+        <div class="map-dot" data-code="KLAX" style="left:13%;top:45%;"></div>
+        <div class="map-dot" data-code="EGLL" style="left:50%;top:28%;"></div>
+        <div class="map-dot" data-code="YSSY" style="left:85%;top:72%;"></div>
+        <svg style="position:absolute;inset:0;width:100%;height:100%;" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <path d="M23 48 Q25 43 27 38" stroke="#e05c00" stroke-width="0.3" fill="none" stroke-dasharray="1 1" opacity="0.5"/>
+          <path d="M23 48 Q18 46 13 45" stroke="#e05c00" stroke-width="0.3" fill="none" stroke-dasharray="1 1" opacity="0.5"/>
+          <path d="M27 38 Q38 33 50 28" stroke="#e05c00" stroke-width="0.3" fill="none" stroke-dasharray="1 1" opacity="0.5"/>
+          <path d="M50 28 Q67 50 85 72" stroke="#e05c00" stroke-width="0.3" fill="none" stroke-dasharray="1 1" opacity="0.5"/>
+        </svg>
+        <div class="map-center-label">
+          <strong>Orbit Aviation</strong>
+          <span>Interactive map · coming soon</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section id="news" class="news-section">
+  <div class="inner">
+    <div class="section-header">
+      <div class="section-tag">Dispatch</div>
+      <h2>Latest <span class="accent">from ops</span></h2>
+    </div>
+    <div class="news-grid">
+      <div class="news-card">
+        <div class="news-meta"><span class="news-tag">Fleet</span><span class="news-date">18 Mar 2026</span></div>
+        <h3>737-700 Cleared for Service</h3>
+        <p>After weeks of crew qualification and route planning, our first narrowbody is now flying the KDFW–KORD corridor.</p>
+        <a href="#" class="news-link">Full report →</a>
+      </div>
+      <div class="news-card">
+        <div class="news-meta"><span class="news-tag">Operations</span><span class="news-date">05 Mar 2026</span></div>
+        <h3>Q1 Group Flight: Record Haul</h3>
+        <p>Twenty pilots, 600+ hours, 84 cargo assignments across three continents. Our best quarter yet.</p>
+        <a href="#" class="news-link">Full report →</a>
+      </div>
+      <div class="news-card">
+        <div class="news-meta"><span class="news-tag">Community</span><span class="news-date">22 Feb 2026</span></div>
+        <h3>New Rank Framework Live</h3>
+        <p>Overhauled progression system mirroring real-world airline structures. All existing members grandfathered in.</p>
+        <a href="#" class="news-link">Full report →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROSTER -->
+<section id="roster" class="roster-section">
+  <div class="inner">
+    <div class="section-header">
+      <div class="section-tag">Member Roster</div>
+      <h2>The <span class="accent">crew</span></h2>
+      <p class="lead">Active pilots, their rank, hours logged, and home base. Earn your place on this list.</p>
+    </div>
+    <div class="roster-layout">
+      <div class="roster-cards">
+        <div class="rcard"><div class="rcard-val">24<span>+</span></div><div class="rcard-label">Active Members</div></div>
+        <div class="rcard"><div class="rcard-val">8,450</div><div class="rcard-label">Hours Flown</div></div>
+        <div class="rcard"><div class="rcard-val">$2.4M</div><div class="rcard-label">FSE Earnings</div></div>
+        <div class="rcard"><div class="rcard-val">5</div><div class="rcard-label">Rank Tiers</div></div>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Pilot</th><th>Rank</th><th>Hours</th><th>Base</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="pilot-name">OA-001 / CommanderAce</td><td><span class="rank-tag">Fleet Captain</span></td><td>1,240 hrs</td><td>KDFW</td></tr>
+          <tr><td class="pilot-name">OA-002 / NorthernRoute</td><td><span class="rank-tag">Captain</span></td><td>980 hrs</td><td>KORD</td></tr>
+          <tr><td class="pilot-name">OA-003 / SkylineVictor</td><td><span class="rank-tag">Captain</span></td><td>820 hrs</td><td>KLAX</td></tr>
+          <tr><td class="pilot-name">OA-004 / EchoAlpha9</td><td><span class="rank-tag">Senior First Officer</span></td><td>610 hrs</td><td>EGLL</td></tr>
+          <tr><td class="pilot-name">OA-005 / TarmacWanderer</td><td><span class="rank-tag">First Officer</span></td><td>445 hrs</td><td>KDFW</td></tr>
+          <tr><td class="pilot-name">OA-006 / CloudRunner77</td><td><span class="rank-tag">First Officer</span></td><td>390 hrs</td><td>YSSY</td></tr>
+          <tr><td class="pilot-name">OA-007 / GridSquareX</td><td><span class="rank-tag">Second Officer</span></td><td>210 hrs</td><td>KORD</td></tr>
+          <tr><td colspan="4" style="color:rgba(240,232,216,0.3);font-style:italic;font-size:12px;">+ 17 more members on full roster</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN -->
+<section id="join" class="join-section">
+  <div class="inner">
+    <div class="section-tag">How to Join</div>
+    <h2>Ready to <span class="accent">fly the line?</span></h2>
+    <p class="lead">Open to all sim pilots. You need an FS Economy account, a compatible sim, and a willingness to fly with standards.</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">01</span><h3>Get on FSE</h3><p>Create an account at fseconomy.net and get familiar with the cargo and economy mechanics.</p></div>
+      <div class="step"><span class="step-num">02</span><h3>Join Discord</h3><p>Drop into our server, introduce yourself, and get a feel for the crew before applying.</p></div>
+      <div class="step"><span class="step-num">03</span><h3>Submit Application</h3><p>Short form — FSE pilot ID, your sim platform, and how many hours a week you expect to fly.</p></div>
+      <div class="step"><span class="step-num">04</span><h3>Fly Orientation</h3><p>One check-in flight with a senior member. Prove you're set up and ready. Then you're cleared.</p></div>
+    </div>
+    <div class="join-btns">
+      <a href="#contact" class="btn-primary">Apply Now</a>
+      <a href="#contact" class="btn-outline" style="border-color:var(--paper-darker);color:var(--ink);">Join Discord</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="inner">
+    <div class="section-tag">Contact &amp; Links</div>
+    <h2>Get in <span class="accent">touch</span></h2>
+    <div class="contact-grid">
+      <div>
+        <div class="contact-row">
+          <div class="contact-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 5l9 8 9-8"/></svg></div>
+          <div><h4>Email</h4><a href="/cdn-cgi/l/email-protection#adc2dddeedc2dfcfc4d9ccdbc4ccd9c4c2c383cadfc2d8dd"><span class="__cf_email__" data-cfemail="0966797a49667b6b607d687f60687d606667276e7b667c79">[email&#160;protected]</span></a></div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <div><h4>FSE Group ID</h4><p>ORBT — find us in the FS Economy group directory</p></div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+          <div><h4>Community Forum</h4><a href="#">community.orbitaviation.group</a></div>
+        </div>
+      </div>
+      <div class="discord-panel">
+        <h3>Join us on <span>Discord</span></h3>
+        <p>The Discord is where everything happens — flight assignments, group event planning, tech support, and casual pilot chat. Active presence is expected from all members.</p>
+        <a href="#" class="btn-primary">Join the Server →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <svg width="26" height="26" viewBox="0 0 36 36" fill="none">
+      <circle cx="18" cy="18" r="17" stroke="#e05c00" stroke-width="1.5"/>
+      <path d="M9 18l12-3 3 1-3 3z" fill="#e05c00" opacity="0.8"/>
+      <circle cx="18" cy="18" r="4" fill="#e05c00" opacity="0.4"/>
+    </svg>
+    <span class="footer-name">Orbit <span>Aviation</span></span>
+    <div class="footer-divider"></div>
+    <span class="footer-sub">FS E
