@@ -485,11 +485,46 @@ h2 .light { color: var(--olive-light); }
 
 .routes-layout {
   display: grid;
-  grid-template-columns: 1fr 1.6fr;
-  gap: 4rem;
+  grid-template-columns: 1fr 1.4fr 1fr;
+  gap: 3rem;
   align-items: start;
   margin-top: 3rem;
 }
+
+.fbo-group-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--olive-light);
+  padding: 0.6rem 0 0.4rem;
+  border-bottom: 1px solid var(--paper-darker);
+  margin-bottom: 0;
+}
+.fbo-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--paper-darker);
+  transition: padding-left 0.15s;
+  cursor: default;
+}
+.fbo-row:hover { padding-left: 6px; }
+.fbo-icao {
+  font-family: var(--display);
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  color: var(--amber);
+  min-width: 52px;
+}
+.fbo-info h4 {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 1px;
+}
+.fbo-col > .hub-row:first-of-type { border-top: 1px solid var(--paper-darker); }
 
 .hub-row {
   display: flex;
@@ -1192,7 +1227,9 @@ h1            { animation: fadeUp 0.5s 0.1s both; }
       <p class="lead">Five strategic bases across three continents, chosen for cargo density and FSE economic activity.</p>
     </div>
     <div class="routes-layout">
-      <div>
+
+      <!-- HUBS -->
+      <div class="hub-col">
         <div class="hub-row">
           <span class="hub-icao">KDFW</span>
           <div class="hub-info"><h4>Dallas/Fort Worth International</h4><p>Primary hub · High cargo volume</p></div>
@@ -1219,9 +1256,82 @@ h1            { animation: fadeUp 0.5s 0.1s both; }
           <span class="hub-tag satellite">Satellite</span>
         </div>
       </div>
+
+      <!-- MAP -->
       <div class="map-area">
         <iframe src="https://www.google.com/maps/d/u/0/embed?mid=19hUC1aeh_yIg54el23-RspNzr_zE2t0&ehbc=2E312F&noprof=1" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
+
+      <!-- FBOs -->
+      <div class="fbo-col">
+        <div class="fbo-group-label">California</div>
+        <div class="fbo-row">
+          <span class="fbo-icao">67CA</span>
+          <div class="fbo-info"><h4>Chapman Farms Airfield</h4></div>
+        </div>
+        <div class="fbo-row">
+          <span class="fbo-icao">8CA8</span>
+          <div class="fbo-info"><h4>Wallom Field</h4></div>
+        </div>
+        <div class="fbo-row">
+          <span class="fbo-icao">CA53</span>
+          <div class="fbo-info"><h4>Tews Field</h4></div>
+        </div>
+        <div class="fbo-row">
+          <span class="fbo-icao">55Q</span>
+          <div class="fbo-info"><h4>Ponderosa Sky Ranch</h4></div>
+        </div>
+        <div class="fbo-group-label" style="margin-top:1rem;">Mexico</div>
+        <div class="fbo-row">
+          <span class="fbo-icao">MMMZ</span>
+          <div class="fbo-info"><h4>Mazatlán International</h4></div>
+        </div>
+        <div class="fbo-row">
+          <span class="fbo-icao">MM0C</span>
+          <div class="fbo-info"><h4>Bacubirito</h4></div>
+        </div>
+        <div class="fbo-row">
+          <span class="fbo-icao">MM0G</span>
+          <div class="fbo-info"><h4>El Doctor</h4></div>
+        </div>
+        <div class="fbo-row">
+          <span class="fbo-icao">MM0H</span>
+          <div class="fbo-info"><h4>J Agustin Castro</h4></div>
+        </div>
+        <div class="fbo-row">
+          <span class="fbo-icao">MM0W</span>
+          <div class="fbo-info"><h4>Campo Gobierno</h4></div>
+        </div>
+        <div class="fbo-row">
+          <span class="fbo-icao">MM1G</span>
+          <div class="fbo-info"><h4>Guamuchil</h4></div>
+        </div>
+        <div class="fbo-row">
+          <span class="fbo-icao">MM1M</span>
+          <div class="fbo-info"><h4>Alamos</h4></div>
+        </div>
+        <div class="fbo-row">
+          <span class="fbo-icao">MM1Q</span>
+          <div class="fbo-info"><h4>Cosala</h4></div>
+        </div>
+        <div class="fbo-row">
+          <span class="fbo-icao">MM2D</span>
+          <div class="fbo-info"><h4>Cuatro Ciengas New</h4></div>
+        </div>
+        <div class="fbo-row">
+          <span class="fbo-icao">MM2F</span>
+          <div class="fbo-info"><h4>Coahuayana</h4></div>
+        </div>
+        <div class="fbo-row">
+          <span class="fbo-icao">MM2R</span>
+          <div class="fbo-info"><h4>El Fuerte</h4></div>
+        </div>
+        <div class="fbo-row">
+          <span class="fbo-icao">MM2U</span>
+          <div class="fbo-info"><h4>Laguna Del Ray</h4></div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
